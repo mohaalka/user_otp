@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:user_otp/authertication/authertication_provider.dart';
 import 'package:user_otp/authertication/otp.dart';
 import 'package:user_otp/imagePath/imagesPathes.dart';
 
@@ -34,8 +38,25 @@ class _RegisterationState extends State<Registeration> {
     super.dispose();
   }
 
+  void sendPhoneNumber() {
+    final authrepo =
+        Provider.of<AutherTicatationProvider>(context, listen: false);
+    String phoneNumber = phoneController.text.trim();
+    String fullPhoneNumber = '${selectedCountry.phoneCode}$phoneNumber';
+
+    print('phone Numer: $phoneNumber');
+    print('Full phone Numer: $fullPhoneNumber');
+
+    authrepo.signWithPhone(
+        context: context,
+        phoneNumber: fullPhoneNumber,
+        btnController: btnControler);
+  }
+
   @override
   Widget build(BuildContext context) {
+    phoneController.selection = TextSelection.fromPosition(
+        TextPosition(offset: phoneController.text.length));
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -79,6 +100,11 @@ class _RegisterationState extends State<Registeration> {
                     maxLength: 9,
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontWeight: FontWeight.w900),
+                    onChanged: (value) {
+                      setState(() {
+                        phoneController.text = value;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: "Please Eneter Code to verify",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 15),
@@ -112,7 +138,22 @@ class _RegisterationState extends State<Registeration> {
                               ),
                             ),
                           ),
-                        )),
+                        ),
+                        suffixIcon: phoneController.text.length >= 9
+                            ? Container(
+                                height: 20,
+                                width: 20,
+                                margin: EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.green),
+                                child: Icon(
+                                  Icons.done,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : null),
                   ),
                 ),
                 SizedBox(
@@ -124,8 +165,11 @@ class _RegisterationState extends State<Registeration> {
                   child: RoundedLoadingButton(
                       controller: btnControler,
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Otp()));
+                        setState(() {
+                          sendPhoneNumber();
+                        });
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => Otp()));
                       },
                       successIcon: Icons.check,
                       successColor: Colors.green,

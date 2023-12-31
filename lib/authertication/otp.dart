@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:provider/provider.dart';
+import 'package:user_otp/authertication/authertication_provider.dart';
+import 'package:user_otp/authertication/user_information.dart';
 import '../imagePath/imagesPathes.dart';
 
 class Otp extends StatefulWidget {
-  const Otp({Key? key}) : super(key: key);
+  final String verificationId;
+  const Otp({Key? key, required this.verificationId}) : super(key: key);
 
   @override
   _OtpState createState() => _OtpState();
 }
 
 class _OtpState extends State<Otp> {
+  String? smsCode;
+
+  void verifyOTP({required smsCode}) {
+    final authrepo =
+        Provider.of<AutherTicatationProvider>(context, listen: false);
+    authrepo.verifyOTP(
+        context: context,
+        verificationId: widget.verificationId,
+        smsCode: smsCode,
+        onSuccess: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => UserInformation()));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authrepo =
+        Provider.of<AutherTicatationProvider>(context, listen: true);
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -60,12 +80,20 @@ class _OtpState extends State<Otp> {
                       ),
                       textStyle: TextStyle(fontWeight: FontWeight.w600)),
                   onCompleted: (value) {
-                    print('value ${value}');
+                    setState(() {
+                      smsCode = value;
+                    });
+                    verifyOTP(smsCode: smsCode);
                   },
                 ),
                 SizedBox(
                   height: 45,
                 ),
+                authrepo.isLogedIn
+                    ? CircularProgressIndicator(
+                        color: Colors.orangeAccent,
+                      )
+                    : SizedBox.shrink(),
                 Text(
                   "Didn't receive any code ?",
                   style: TextStyle(

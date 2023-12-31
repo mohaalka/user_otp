@@ -1,7 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-
 import '../imagePath/imagesPathes.dart';
 
 class UserInformation extends StatefulWidget {
@@ -96,7 +95,7 @@ class _UserInformationState extends State<UserInformation> {
                         maxLength: 10,
                         maxLines: 1,
                         textEditingController: phoneController,
-                        enabled: false)
+                        enabled: true)
                   ]),
                 ),
 
