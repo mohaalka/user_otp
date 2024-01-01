@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:user_otp/authertication/authertication_provider.dart';
-import 'package:user_otp/authertication/user_information.dart';
+import 'package:user_otp/authertication/Screens/user_information.dart';
 import 'package:user_otp/constants/constants.dart';
 import 'package:user_otp/firebase_options.dart';
 import 'package:user_otp/mainScreans/homeScreen.dart';
 import 'package:user_otp/prividers/my_theme_providers.dart';
 import 'package:user_otp/themes/my_themes.dart';
-import 'authertication/registeration.dart';
+import 'authertication/Screens/authertication_provider.dart';
+import 'authertication/Screens/registeration.dart';
+import 'authertication/Screens/registeration_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

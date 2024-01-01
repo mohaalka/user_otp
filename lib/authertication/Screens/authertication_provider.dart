@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:user_otp/authertication/otp.dart';
-
-import '../utility/firebase_option.dart';
+import 'package:user_otp/authertication/Screens/userotp.dart';
+import 'package:user_otp/authertication/Screens/otp.dart';
+import '../../utility/firebase_option.dart';
 
 class AutherTicatationProvider extends ChangeNotifier {
   bool _isLogedIn = true;
@@ -44,7 +44,7 @@ class AutherTicatationProvider extends ChangeNotifier {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Otp(
+                  builder: (context) => userOTPInfo(
                         verificationId: verificationId,
                       )));
         },

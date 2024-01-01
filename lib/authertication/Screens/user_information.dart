@@ -1,7 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import '../imagePath/imagesPathes.dart';
+import '../../imagePath/imagesPathes.dart';
 
 class UserInformation extends StatefulWidget {
   const UserInformation({Key? key}) : super(key: key);
